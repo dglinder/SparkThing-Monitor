@@ -1,5 +1,6 @@
 # SparkThing-Monitor
-Sparkfun EPS8266 Thing Refrigerator monitor
+Sparkfun EPS8266 Thing Refrigerator monitor for the Sparkfun/myDevices/Espressif contest.
+https://www.hackster.io/contests/ESP8266?utm_campaign=approved_challenge_idea&utm_medium=email&utm_source=hackster
 
 ## URLs and notes
  * http://sheepdogguides.com/arduino/DS18B20-HowTo.htm
@@ -13,4 +14,6 @@ Part souces:
   * (https://www.sparkfun.com/products/245) One Wire Digital Temperature Sensor - DS18B20
   * (https://learn.sparkfun.com/tutorials/esp8266-thing-development-board-hookup-guide/all) ESP8266 Thing Development Board Hookup Guide
 
+Examples:
+ * https://www.hackster.io/user17826/cayenne-temperature-monitor-a72eca
   
