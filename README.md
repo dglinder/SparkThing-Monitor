@@ -14,6 +14,9 @@ Part souces:
   * (https://www.sparkfun.com/products/245) One Wire Digital Temperature Sensor - DS18B20
   * (https://learn.sparkfun.com/tutorials/esp8266-thing-development-board-hookup-guide/all) ESP8266 Thing Development Board Hookup Guide
 
+Libraries
+ * https://www.pjrc.com/teensy/td_libs_OneWire.html
+
 Examples:
  * https://www.hackster.io/user17826/cayenne-temperature-monitor-a72eca
   
