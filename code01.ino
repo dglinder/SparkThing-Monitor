@@ -15,9 +15,9 @@ char wifiPassword[] = "xx";
 #define PUB_DELAY 10000
 
 // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
-char username[] = "85f2c2a0-6fc1-11e7-9c62-d3cf878e1bfa";
-char password[] = "0a935ebd18b0e9d603d9a6202db99249ebd2a6e9";
-char clientID[] = "acbde220-9b4a-11e7-bba6-6918eb39b85e";
+char username[] = "";
+char password[] = "";
+char clientID[] = "";
 
 unsigned long lastMillis = 0;
 
