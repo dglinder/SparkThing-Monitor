@@ -1,4 +1,3 @@
-[code]
 //#define CAYENNE_DEBUG
 #define CAYENNE_PRINT Serial
 #include <CayenneMQTTESP8266.h>
@@ -187,6 +186,3 @@ void loop(void) {
   }
 
 }
-
-
-[/code]
