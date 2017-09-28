@@ -12,17 +12,11 @@
 
 OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
 
-// WiFi network info.
-char ssid[] = "ArcherC9";
-char wifiPassword[] = "LinderArcherC9";
-
-// Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
-char username[] = "85f2c2a0-6fc1-11e7-9c62-d3cf878e1bfa";
-char password[] = "0a935ebd18b0e9d603d9a6202db99249ebd2a6e9";
-char clientID[] = "3392ecd0-a197-11e7-bba6-6918eb39b85e";
+// Include local WiFi and Cayenne credentials from separate file.
+#include "creds.h"
 
 // How long to delay in milliseconds (10,000 == 10 seconds)
-#define PUB_DELAY 30000 //120000
+#define PUB_DELAY 120000
 
 // Maximum number of temp probes to keep.
 #define MAXPROBES 3
@@ -110,11 +104,7 @@ void loop(void) {
   // Select the device based on the probenum counter
   for (i = 0; i < 8; i++) {
     addr[i] = MACaddr[probenum][i];
-//    Serial.print(MACaddr[probenum][i], HEX);
   }
-//  Serial.print("=="); Serial.println(probenum);
-//  ds.reset_search();
-//  delay(250);
   ds.reset();
 
   if (OneWire::crc8(addr, 7) != addr[7]) {
@@ -166,12 +156,11 @@ void loop(void) {
   
   Cayenne.loop();
 
-  //Publish data every 10 seconds (10000 milliseconds). Change this value to publish at a different interval.
+  //Publish data every PUB_DELAY milliseconds. Change this value aboveto publish at a different interval.
   if (millis() - lastMillis > PUB_DELAY) {
     Serial.println("################################################");
     lastMillis = millis();
     for ( i = 0; i < MAXPROBES; i++) {
-      //Cayenne.virtualWrite(probenum, celsius, TEMPERATURE, CELSIUS);
       Cayenne.celsiusWrite(i, tempsC[i]);
       Serial.print(" Probe "); Serial.print(i);
       Serial.print(" Value "); Serial.print(tempsC[i]); Serial.print("C");
@@ -181,5 +170,6 @@ void loop(void) {
       delay(500); // Small delay for the Cayenne library to catch its breath.
     }
   }
-
 }
+
+
