@@ -2,7 +2,7 @@
 #define CAYENNE_PRINT Serial
 #include <CayenneMQTTESP8266.h>
 #include <OneWire.h>
-
+//
 // OneWire DS18S20, DS18B20, DS1822 Temperature Example
 //
 // http://www.pjrc.com/teensy/td_libs_OneWire.html
@@ -13,6 +13,16 @@
 OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
 
 // Include local WiFi and Cayenne credentials from separate file.
+// Must include:
+// // WiFi network info.
+// char ssid[] = "xx";
+// char wifiPassword[] = "xx";
+//
+// // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
+// char username[] = "xx";
+// char password[] = "xx";
+// char clientID[] = "xx";
+
 #include "creds.h"
 
 // How long to delay in milliseconds (10,000 == 10 seconds)
