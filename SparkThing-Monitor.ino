@@ -10,26 +10,36 @@
 // The DallasTemperature library can do all this work for you!
 // http://milesburton.com/Dallas_Temperature_Control_Library
 
+// Wiring setup on a SparkFun Thing Dev board:
+// * Ground == Black
+// * 3V     == Red
+// * Pin 2  == Green / Data
 OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
+
+// Wiring to the Dallas Semiconductor DS18B20 sensors:
+// * Pin 1  == Ground    +-------+
+// * Pin 2  == Data      \ 1 2 3 /
+// * Pin 3  == 3V         \-----/
 
 // Include local WiFi and Cayenne credentials from separate file.
 // Must include:
-// // WiFi network info.
-// char ssid[] = "xx";
-// char wifiPassword[] = "xx";
-//
-// // Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
-// char username[] = "xx";
-// char password[] = "xx";
-// char clientID[] = "xx";
-
+// A: WiFi network info.
+//   char ssid[] = "xx";
+//   char wifiPassword[] = "xx";
+// B: Cayenne authentication info. This should be obtained from the Cayenne Dashboard.
+//   char username[] = "xx";
+//   char password[] = "xx";
+//   char clientID[] = "xx";
 #include "creds.h"
 
 // How long to delay in milliseconds (10,000 == 10 seconds)
 #define PUB_DELAY 120000
 
-// Maximum number of temp probes to keep.
+// Maximum number of temp probes to keep track of.
 #define MAXPROBES 3
+
+// Default starting temp
+#define DEFTEMP -200.00
 
 byte probenum = 0;
 byte probecnt = 0;
@@ -60,11 +70,11 @@ void setup(void) {
     Serial.println();
 
     // Store a starting temp.
-    tempsC[probecnt]=-98.76;
-    tempsF[probecnt]=-98.76;
+    tempsC[probecnt]=DEFTEMP;
+    tempsF[probecnt]=DEFTEMP;
     // the first ROM byte indicates which chip
     switch (addr[0]) {
-      case 0x10:
+      case 0x10: 
 //        Serial.println("  Chip = DS18S20");  // or old DS1820
         type_s[probecnt] = 1;
         break;
@@ -107,6 +117,23 @@ void loop(void) {
   byte data[12];
   float celsius, fahrenheit;
 
+  // Publish data every PUB_DELAY milliseconds. 
+  // Change this value above to publish at a different interval.
+  if (millis() - lastMillis > PUB_DELAY) {
+    Serial.println("################################################");
+    lastMillis = millis();
+    for ( i = 0; i < MAXPROBES; i++) {
+      Cayenne.celsiusWrite(i, tempsC[i]);
+      Serial.print(" Probe "); Serial.print(i);
+      Serial.print(" Value "); Serial.print(tempsC[i]); Serial.print("C");
+      Serial.print(" or ");    Serial.print(tempsF[i]); Serial.print("F");
+      Serial.print("  ADDR "); Serial.print(MACaddr[i][6], HEX); Serial.print(MACaddr[i][7], HEX);
+      Serial.println("");
+      delay(1000); // Small delay for the Cayenne library to catch its breath.
+    }
+  }
+
+  // Start back at probe #0 when we get to the end of the line.
   if (probenum >= probecnt) {
     probenum = 0;
   }
@@ -154,32 +181,17 @@ void loop(void) {
     if (cfg == 0x00) raw = raw & ~7;  // 9 bit resolution, 93.75 ms
     else if (cfg == 0x20) raw = raw & ~3; // 10 bit res, 187.5 ms
     else if (cfg == 0x40) raw = raw & ~1; // 11 bit res, 375 ms
-    //// default is 12 bit resolution, 750 ms conversion time
+    // default is 12 bit resolution, 750 ms conversion time
   }
   celsius = (float)raw / 16.0;
   fahrenheit = celsius * 1.8 + 32.0;
 
   tempsC[probenum] = celsius;
   tempsF[probenum] = fahrenheit;
-  // We're working on a new probe the next loop.
+  // We're registering a new probe the next loop.
   probenum++;
   
   Cayenne.loop();
-
-  //Publish data every PUB_DELAY milliseconds. Change this value aboveto publish at a different interval.
-  if (millis() - lastMillis > PUB_DELAY) {
-    Serial.println("################################################");
-    lastMillis = millis();
-    for ( i = 0; i < MAXPROBES; i++) {
-      Cayenne.celsiusWrite(i, tempsC[i]);
-      Serial.print(" Probe "); Serial.print(i);
-      Serial.print(" Value "); Serial.print(tempsC[i]); Serial.print("C");
-      Serial.print(" or ");    Serial.print(tempsF[i]); Serial.print("F");
-      Serial.print("  ADDR "); Serial.print(MACaddr[i][6], HEX); Serial.print(MACaddr[i][7], HEX);
-      Serial.println("");
-      delay(500); // Small delay for the Cayenne library to catch its breath.
-    }
-  }
 }
 
 
