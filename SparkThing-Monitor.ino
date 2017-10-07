@@ -11,9 +11,9 @@
 // http://milesburton.com/Dallas_Temperature_Control_Library
 
 // Wiring setup on a SparkFun Thing Dev board:
-// * Ground == Black
-// * 3V     == Red
-// * Pin 2  == Green / Data
+// * Ground == Blue
+// * 3V     == Blue/White
+// * Pin 2  == Green
 OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
 
 // Wiring to the Dallas Semiconductor DS18B20 sensors:
