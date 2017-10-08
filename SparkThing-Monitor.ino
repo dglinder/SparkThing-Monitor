@@ -17,9 +17,9 @@
 OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
 
 // Wiring to the Dallas Semiconductor DS18B20 sensors:
-// * Pin 1  == Ground    +-------+
-// * Pin 2  == Data      \ 1 2 3 /
-// * Pin 3  == 3V         \-----/
+// * Pin 1  == Ground == Blue       +-------+
+// * Pin 2  == Data   == Green      \ 1 2 3 /
+// * Pin 3  == 3V     == Blue/White  \-----/
 
 // Include local WiFi and Cayenne credentials from separate file.
 // Must include:
@@ -33,7 +33,7 @@ OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
 #include "creds.h"
 
 // How long to delay in milliseconds (10,000 == 10 seconds)
-#define PUB_DELAY 120000
+#define PUB_DELAY 5000
 
 // Maximum number of temp probes to keep track of.
 #define MAXPROBES 3
@@ -193,4 +193,5 @@ void loop(void) {
   
   Cayenne.loop();
 }
+
 
