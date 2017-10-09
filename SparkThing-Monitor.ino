@@ -14,7 +14,8 @@
 // * Ground == Blue
 // * 3V     == Blue/White
 // * Pin 2  == Green
-OneWire  ds(2);  // on pin 2 (a 4.7K resistor is necessary)
+#define DATAPIN 14
+OneWire  ds(DATAPIN);  // a 4.7K resistor is necessary
 
 // Wiring to the Dallas Semiconductor DS18B20 sensors:
 // * Pin 1  == Ground == Blue       +-------+
@@ -123,7 +124,8 @@ void loop(void) {
     Serial.println("################################################");
     lastMillis = millis();
     for ( i = 0; i < MAXPROBES; i++) {
-      Cayenne.celsiusWrite(i, tempsC[i]);
+      //Cayenne.celsiusWrite(i, tempsC[i]);
+      Cayenne.fahrenheitWrite(i, tempsF[i]);
       Serial.print(" Probe "); Serial.print(i);
       Serial.print(" Value "); Serial.print(tempsC[i]); Serial.print("C");
       Serial.print(" or ");    Serial.print(tempsF[i]); Serial.print("F");
