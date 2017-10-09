@@ -33,8 +33,8 @@ OneWire  ds(DATAPIN);  // a 4.7K resistor is necessary
 //   char clientID[] = "xx";
 #include "creds.h"
 
-// How long to delay in milliseconds (10,000 == 10 seconds)
-#define PUB_DELAY 5000
+// How long to delay in milliseconds (10,000 == 10 seconds, 120,000 == 120 seconds == 2 minutes)
+#define PUB_DELAY 120000
 
 // Maximum number of temp probes to keep track of.
 #define MAXPROBES 3
