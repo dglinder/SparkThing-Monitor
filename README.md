@@ -1,7 +1,9 @@
 # SparkThing-Monitor
 
-Sparkfun EPS8266 Thing Refrigerator monitor for the Sparkfun/myDevices/Espressif contest.
-https://www.hackster.io/contests/ESP8266?utm_campaign=approved_challenge_idea&utm_medium=email&utm_source=hackster
+Sparkfun EPS8266 Thing Refrigerator monitor using IFTTT for the data collection and alerting interface.
+
+Inspiration from Robert Cowan video:
+  https://www.youtube.com/watch?v=XxH1q2Tcdis
 
 ## URLs and notes
  * http://sheepdogguides.com/arduino/DS18B20-HowTo.htm
